@@ -8,9 +8,9 @@ const { isRole } = require('../middlewares/validateRol');
 const router = Router();
 
 router.get('/', [validateJWT,isRole('ADMIN_ROLE','TRAINEE_ROLE')], getClients);
-router.get('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE','TRAINEE_ROLE')], getClient);
-router.put('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE','TRAINEE_ROLE')], updateClient);
-router.delete('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE')], removeClient);
+router.get('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE','TRAINEE_ROLE'),validateFields], getClient);
+router.put('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE','TRAINEE_ROLE'),validateFields], updateClient);
+router.delete('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE'),validateFields], removeClient);
 router.post('/', [validateJWT,isRole('ADMIN_ROLE')], createClient);
 router.put('/payment/:id', [
     validateJWT,
