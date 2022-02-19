@@ -12,9 +12,9 @@ module.exports = {
         const clients = await Client.find({ status: true }).limit(Number(limit)).skip(Number(page));
         res.json({ clients });
     },
-  /**
-   * Obtener un cliente
-   */
+    /**
+     * Obtener un cliente
+     */
     getClient: async (req, res) => {
         const { id } = req.params
         const client = await Client.findById(id).populate('trainer');
@@ -36,22 +36,23 @@ module.exports = {
     },
     updateClient: async (req, res) => {
         const { id } = req.params;
-        const { _id,observations,trainer,__v, ...rest } = req.body;
+        const { _id, observations, trainer, __v, ...rest } = req.body;
         //TODO: Validar contra base de datos
-        const client = await Client.findByIdAndUpdate(id,rest);
-        const updated = await Client.findById(id);       
+        const client = await Client.findByIdAndUpdate(id, rest);
+        const updated = await Client.findById(id);
         res.json({
-            client:updated
+            client: updated
         })
     },
     updateClientPayment: async (req, res) => {
         const { id } = req.params;
-        const { payment } = req.body;
+        const { payment = [] } = req.body;
         const client = await Client.findById(id);
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-        client.payments = payment;
+        const arr = Array.prototype.concat(client.payment, payment);
+        client.payments = [...new Set(arr)];
         await client.save();
         return res.json({ client });
     },
@@ -62,7 +63,8 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-        client.observations = observation;
+        const arr = Array.prototype.concat(client.observations, observation);
+        client.observations = [...new Set(arr)];
         await client.save();
         return res.json({ client });
     },
