@@ -1,5 +1,6 @@
 const Client = require('../models/client');
 const Payment = require('../models/payment');
+const mongoose = require('mongoose')
 
 module.exports = {
 
@@ -51,7 +52,8 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-        const arr = Array.prototype.concat(client.payment, payment);
+        let objectIdArray = client.payments.map(s => s.toString());
+        const arr = Array.prototype.concat(objectIdArray, payment);
         client.payments = [...new Set(arr)];
         await client.save();
         return res.json({ client });
@@ -63,7 +65,8 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-        const arr = Array.prototype.concat(client.observations, observation);
+        let objectIdArray = client.observations.map(s => s.toString());
+        const arr = Array.prototype.concat(objectIdArray, observation);
         client.observations = [...new Set(arr)];
         await client.save();
         return res.json({ client });
