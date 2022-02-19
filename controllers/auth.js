@@ -48,7 +48,7 @@ module.exports = {
     },
 
     register: async (req, res = response) => {
-        return res.status(403).json({ msg: 'User registration is not allowed now' })
+        //return res.status(403).json({ msg: 'User registration is not allowed now' })
         const { name, email, password } = req.body;
         const user = new User({ name, email, password });
         //Encriptar la contraseña
