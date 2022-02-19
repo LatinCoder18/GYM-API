@@ -1,0 +1,38 @@
+[
+    {
+        "path": "/users",
+        "middlewares": "",
+        "route": "../routes/users",
+        "type": "web"
+    },
+    {
+        "path": "/api/auth",
+        "middlewares": "",
+        "route": "../routes/auth",
+        "type": "web"
+    },
+    {
+        "path": "/api/clients",
+        "middlewares": "",
+        "route": "../routes/clients",
+        "type": "web"
+    },
+    {
+        "path": "/api/payments",
+        "middlewares": "",
+        "route": "../routes/payments",
+        "type": "web"
+    },
+    {
+        "path": "/api/observations",
+        "middlewares": "",
+        "route": "../routes/observations",
+        "type": "web"
+    },
+    {
+        "path": "/api/uploads",
+        "middlewares": "",
+        "route": "../routes/uploads",
+        "type": "web"
+    }
+]
