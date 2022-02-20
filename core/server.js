@@ -7,6 +7,8 @@ const validarJSON = require('../middlewares/ValidateJSON');
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
+const fs = require('fs')
+const path = require('path')
 class Server {
     constructor() {
         this.app = express();
@@ -22,12 +24,13 @@ class Server {
     middlewares() {
         // Protección
         this.app.use(cors())
-        this.app.use(morgan('tiny')) 
+        const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+        this.app.use(morgan('tiny', { stream: accessLogStream }));
         this.app.use(fileUpload({
             useTempFiles: true,
             tempFileDir: '/tmp/',
             createParentPath: true
-        })) 
+        }))
         this.app.use(bodyParser.json())
         this.app.use(bodyParser.urlencoded({ extended: true }))
         this.app.use(validarJSON);
@@ -39,7 +42,7 @@ class Server {
          */
         // Load Routes
         const routes = await load();
-        routes.map((element)=>{
+        routes.map((element) => {
             this.app.use(`${element.path}`, require(`${element.route}`));
         });
         this.app.use('/', require('../routes/defaults'));
