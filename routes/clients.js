@@ -12,19 +12,5 @@ router.get('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valid
 router.put('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE','TRAINEE_ROLE'),validateFields], updateClient);
 router.delete('/:id', [validateJWT,check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE'),validateFields], removeClient);
 router.post('/', [validateJWT,isRole('ADMIN_ROLE')], createClient);
-router.put('/payment/:id', [
-    validateJWT,
-    isRole('ADMIN_ROLE'),
-    check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient),
-    check('payment', 'El parámetro payment debe venir en la petición').not().isEmpty(),
-    check('payment').custom(verifyPayments),
-    validateFields], updateClientPayment);
-router.put('/observation/:id', [
-    validateJWT,
-    isRole('ADMIN_ROLE','TRAINEE_ROLE'),
-    check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient),
-    check('observation', 'El parámetro observation debe venir en la petición').not().isEmpty(),
-    check('observation').custom(verifyObservations),
-    validateFields], updateClientObservation);
 
 module.exports = router;

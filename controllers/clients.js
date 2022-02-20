@@ -9,8 +9,7 @@ module.exports = {
      */
     getClients: async (req, res) => {
         const { limit = 10, page = 0 } = req.query
-        console.log(req.query)
-        const clients = await Client.find({ status: true }).limit(Number(limit)).skip(Number(page));
+        const clients = await Client.find({ status: true }).sort({ firstname: 'asc' }).limit(Number(limit)).skip(Number(page));
         res.json({ clients });
     },
     /**
@@ -38,7 +37,6 @@ module.exports = {
     updateClient: async (req, res) => {
         const { id } = req.params;
         const { _id, observations, trainer, __v, ...rest } = req.body;
-        //TODO: Validar contra base de datos
         const client = await Client.findByIdAndUpdate(id, rest);
         const updated = await Client.findById(id);
         res.json({
