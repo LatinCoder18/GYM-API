@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { createPayment, getPayment, removePayment } = require('../controllers/payments');
+const { existClient } = require('../helpers/dbValidators');
 const { validateFields } = require('../middlewares/validateFields');
 const { validateJWT } = require('../middlewares/validateJWT')
 const { isRole } = require('../middlewares/validateRol');
@@ -12,7 +13,7 @@ router.post('/', [
     isRole('ADMIN_ROLE'),
     check('amount', 'La debe especificar la cantidad del pago').not().isEmpty(),
     check('amount', 'La cantidad debe ser un numero').isNumeric(),
-    check('client').isMongoId(),
+    check('client').isMongoId().bail().custom(existClient),
     validateFields
 ], createPayment);
 
