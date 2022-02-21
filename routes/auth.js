@@ -5,6 +5,13 @@ const { validateFields } = require('../middlewares/validateFields');
 const { existEmail } = require('../helpers/dbValidators');
 const { isRole } = require('../middlewares/validateRol');
 const router = Router();
+/**
+ * Route to login
+ * @name POST /api/auth/login
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @returns {object} JWT
+ */
 router.post('/login',
     [
         check('email', 'You must provide an user id').isEmail(),
