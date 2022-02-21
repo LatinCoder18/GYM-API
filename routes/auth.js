@@ -4,7 +4,9 @@ const { login, register } = require('../controllers/auth');
 const { validateFields } = require('../middlewares/validateFields');
 const { existEmail } = require('../helpers/dbValidators');
 const { isRole } = require('../middlewares/validateRol');
+const validateJWT = require('../middlewares/validateJWT');
 const router = Router();
+
 /**
  * Route to login
  * @name POST /api/auth/login
@@ -33,5 +35,11 @@ router.post('/register', [check('email', 'You must provide an user id').isEmail(
 check('password', 'You must provide an user password'),
 check('name', 'You must provide an user name'),
 check('email').custom(existEmail), isRole('ADMIN_ROLE'), validateFields], register);
+
+router.get('/check', [validateJWT], (req, res) => {
+    res.json({
+        message: 'ok'
+    })
+});
 
 module.exports = router;
