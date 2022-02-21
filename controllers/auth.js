@@ -26,7 +26,7 @@ module.exports = {
             // verificar la contraseña
             const ValidPassword = bcryptjs.compareSync(password, user.password);
             if (!ValidPassword) {
-                res.status(400).json({
+               return res.status(400).json({
                     msg: 'Usuario/ Password no son correctos',
                 })
             }
