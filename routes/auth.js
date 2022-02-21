@@ -4,7 +4,7 @@ const { login, register } = require('../controllers/auth');
 const { validateFields } = require('../middlewares/validateFields');
 const { existEmail } = require('../helpers/dbValidators');
 const { isRole } = require('../middlewares/validateRol');
-const validateJWT = require('../middlewares/validateJWT');
+const { validateJWT } = require('../middlewares/validateJWT');
 const router = Router();
 
 /**
