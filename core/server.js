@@ -26,6 +26,7 @@ class Server {
         this.app.use(cors())
         const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
         this.app.use(morgan('tiny', { stream: accessLogStream }));
+        this.app.use(morgan('tiny'));
         this.app.use(fileUpload({
             useTempFiles: true,
             tempFileDir: '/tmp/',
