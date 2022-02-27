@@ -16,6 +16,7 @@ router.put('/:id', (req, res) => {
     res.send('Hola');
 })
 /**
+ * 
  * Validar que sea Administrador
  * Validar que sea un mongoid valido
  * 

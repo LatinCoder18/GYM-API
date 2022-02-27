@@ -1,19 +1,36 @@
 const Payment = require('../models/payment');
 const Client = require('../models/client');
+const allowedMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+let payments = [];
+let ids = [];
 module.exports = {
     createPayment: async (req, res) => {
-        const { amount, client } = req.body
-        const data = {
-            amount, client
+        const { amount, client, months, comment, discount } = req.body
+        for (const month of months) {
+            if (!allowedMonths.includes(month)) {
+                return res.status(400).json({
+                    message: `El mes ${month} no es válido los meses válidos son ${allowedMonths}`
+                })
+            }
         }
-        const payment = new Payment(data);
-        await payment.save();
-        const cliente = await Client.findById(client);
+        if (Array.isArray(months)) {
+            for (const element of months) {
+                const data = {
+                    amount, client, month: element, comment, discount
+                }
+                const payment = new Payment(data);
+                await payment.save();
+                payments.push(payment);
+                ids.push(payment._id);
+            }   
+        }        
+        let cliente = await Client.findById(client);
         let objectIdArray = cliente.payments.map(s => s.toString());
-        const arr = Array.prototype.concat(objectIdArray, [payment._id.toString()]);
+        let newArray = ids.map(s => s.toString());
+        const arr = Array.prototype.concat(objectIdArray, newArray);
         cliente.payments = [...new Set(arr)];
         await cliente.save();
-        return res.status(201).json({ payment });
+        return res.status(201).json({ payments });
     },
     removePayment: async (req, res) => {
         const { id } = req.params;
@@ -40,4 +57,12 @@ module.exports = {
         }
         res.json(payment);
     },
+    getPayments: async (req, res) => {
+        const { id } = req.params
+        const payments = await Payment.find({ $and: [{ status: true }, { client: id }] }).populate('client');
+        if (!payments) {
+            return res.status(400).json({ msg: 'Payments not found' });
+        }
+        res.json(payments);
+    }
 }

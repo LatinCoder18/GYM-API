@@ -6,6 +6,10 @@ const PaymentSchema = Schema({
         type: String,
         default: new Date().toLocaleDateString()
     },
+    month:{
+        type: String,
+        default: new Date().getMonth()         
+    },
     amount: {
         type: Number,
         required: [true, 'La cantidad es obligatoria']
@@ -14,6 +18,14 @@ const PaymentSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Client',
         required: true,
+    },
+    comment: {
+        type: String,
+        default: ''
+    },
+    discount:{
+        type: Number,
+        default: 0
     },
     status: {
         type: Boolean,
