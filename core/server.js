@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const fs = require('fs')
 const path = require('path')
+const { main } = require('../modules/crons')
 class Server {
     constructor() {
         this.app = express();
@@ -20,7 +21,9 @@ class Server {
         // Rutas de mi app
         this.routes();
         //  this.listen();
+        this.cron();
     }
+
     middlewares() {
         // Protección
         this.app.use(cors())
@@ -52,7 +55,9 @@ class Server {
     async conectarDB() {
         await dbConnection();
     }
-
+    async cron() {
+        main();
+    }
     async listen() {
         console.clear();
         this.app.listen(this.port, () => {

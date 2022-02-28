@@ -6,9 +6,9 @@ const PaymentSchema = Schema({
         type: String,
         default: new Date().toLocaleDateString()
     },
-    month:{
-        type: String,
-        default: new Date().getMonth()         
+    days: {
+        type: Number,
+        required: [true, 'El número de días es obligatorio']
     },
     amount: {
         type: Number,

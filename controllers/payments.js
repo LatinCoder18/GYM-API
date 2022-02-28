@@ -1,36 +1,21 @@
 const Payment = require('../models/payment');
 const Client = require('../models/client');
-const allowedMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-let payments = [];
-let ids = [];
+
 module.exports = {
     createPayment: async (req, res) => {
         const { amount, client, months, comment, discount } = req.body
-        for (const month of months) {
-            if (!allowedMonths.includes(month)) {
-                return res.status(400).json({
-                    message: `El mes ${month} no es válido los meses válidos son ${allowedMonths}`
-                })
-            }
+        const data = {
+            amount, client, days: (Number(months)*30), comment, discount
         }
-        if (Array.isArray(months)) {
-            for (const element of months) {
-                const data = {
-                    amount, client, month: element, comment, discount
-                }
-                const payment = new Payment(data);
-                await payment.save();
-                payments.push(payment);
-                ids.push(payment._id);
-            }   
-        }        
+        const payment = new Payment(data);
+        await payment.save();
         let cliente = await Client.findById(client);
         let objectIdArray = cliente.payments.map(s => s.toString());
-        let newArray = ids.map(s => s.toString());
-        const arr = Array.prototype.concat(objectIdArray, newArray);
+        const arr = Array.prototype.concat(objectIdArray, [payment._id]);
         cliente.payments = [...new Set(arr)];
+        cliente.servicedays = cliente.servicedays + (Number(months)*30);
         await cliente.save();
-        return res.status(201).json({ payments });
+        return res.status(201).json({ payment });
     },
     removePayment: async (req, res) => {
         const { id } = req.params;

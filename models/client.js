@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+const moment = require('moment');
 const ClientSchema = Schema({
     firstname: {
         type: String,
@@ -61,8 +61,17 @@ const ClientSchema = Schema({
     img: {
         type: String,
         default: 'no-avatar.png',
+    },
+    servicedays:{
+        type: Number,
+        default: 0,
     }
 });
-
+ClientSchema.methods.toJSON = function () {
+    const { ...client } = this.toObject();
+    client.active = (client.servicedays > 0) ? true : false;
+    client.activeto = moment(new Date()).add(client.servicedays,'days').format("DD/MM/YYYY");
+    return client;
+}
 
 module.exports = model('Client', ClientSchema);

@@ -13,7 +13,9 @@ router.post('/', [
     validateJWT,
     isRole('ADMIN_ROLE'),
     check('amount', 'La debe especificar la cantidad del pago').not().isEmpty(),
+    check('client', 'La debe especificar la cantidad de meses pagadas').not().isEmpty(),
     check('amount', 'La cantidad debe ser un numero').isNumeric(),
+    check('months', 'La cantidad debe ser un numero').isNumeric(),
     check('client').isMongoId().bail().custom(existClient),
     validateFields
 ], createPayment);

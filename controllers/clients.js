@@ -1,6 +1,7 @@
 const Client = require('../models/client');
 const Payment = require('../models/payment');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
 
 module.exports = {
 
@@ -21,6 +22,7 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
+        
         res.json({ client })
     },
     createClient: async (req, res) => {
