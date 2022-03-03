@@ -40,4 +40,12 @@ module.exports = {
         }
         res.json(observation);
     },
+    getObservations: async (req, res) => {
+        const { id } = req.params
+        const observation = await Observation.find({ $and: [{ status: true }, { client: id }] }).populate('client');
+        if (!observation) {
+            return res.status(400).json({ msg: 'Observations not found' });
+        }
+        res.json(observation);
+    },
 }
