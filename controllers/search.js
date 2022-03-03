@@ -41,7 +41,7 @@ const searchClient = async (term = '', res = response) => {
         const client = await Client.findById(term);
         return res.json({ results: (client) ? client : [] })
     } else {
-        const client = await Client.find({ $or: [{ firstname: regex }, { lastname: regex }], $and: [{ estado: true }] });
+        const client = await Client.find({ $or: [{ firstname: regex }, { lastname: regex }], $and: [{ status: true }] });
         return res.json({ results: (client) ? client : [] })
     }
 }
