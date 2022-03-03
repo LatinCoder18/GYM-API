@@ -18,7 +18,7 @@ module.exports = {
      */
     getClient: async (req, res) => {
         const { id } = req.params
-        const client = await Client.findById(id).populate('trainer').populate('payments').populate('obsservations');
+        const client = await Client.findById(id).populate('trainer').populate('payments').populate('observations');
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
