@@ -6,15 +6,19 @@ const ObservationSchema = Schema({
     },
     icc: {
         type: Number,
+        default: 0
     },
     imc: {
         type: Number,
+        default: 0
     },
     weight: {
         type: Number,
+        default: 0
     },
     observation: {
-        type: String
+        type: String,
+        default: 'Sin observación'
     },
     client: {
         type: Schema.Types.ObjectId,

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  api:
+    container_name: apigym
+    restart: always
+    build: .
+    ports:
+      - "4000:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongodatabase
+    image: mongo
+    ports:
+      - "27018:27017"

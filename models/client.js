@@ -15,12 +15,15 @@ const ClientSchema = Schema({
     },
     height: {
         type: String,
+        default: 0
     },
     weight: {
         type: String,
+        default: 0
     },
     email: {
         type: String,
+        default: 'Sin correo',
     },
     datetime: {
         type: Date,
@@ -28,12 +31,15 @@ const ClientSchema = Schema({
     },
     phone: {
         type: String,
+        default: 0
     },
     imc: {
         type: String,
+        default: 0
     },
     icc: {
         type: String,
+        default: 0
     },
     services: [{
         type: String,

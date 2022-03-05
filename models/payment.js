@@ -21,7 +21,7 @@ const PaymentSchema = Schema({
     },
     comment: {
         type: String,
-        default: ''
+        default: 'Sin comentario'
     },
     discount:{
         type: Number,

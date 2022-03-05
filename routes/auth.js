@@ -23,7 +23,7 @@ router.post('/login',
 /**
  * Route to register
  * @name POST /api/auth/register
- * @param {string} email - User email
+ * @param {string} email - User emailv
  * @param {string} password - User password
  * @param {string} name - User name
  * @param {string} role - User role
