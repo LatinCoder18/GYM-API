@@ -56,6 +56,11 @@ module.exports = {
         if (!colections.includes(c)) {
             throw new Error(`La coleción a la que intentas subir el archivo no está  permitida en estos momentos`)
         }
+    },
+    isAllowedService: async (c, colections = []) => {
+        if (!colections.includes(c)) {
+            throw new Error(`El servicio al que se intenta añadir en este momento no está disponible`)
+        }
     }
 
 

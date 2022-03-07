@@ -7,11 +7,11 @@ const ClientSchema = Schema({
     },
     lastname: {
         type: String,
-        required: [true, 'El correo es obligatorio'],
+        default: '',
     },
     age: {
         type: Number,
-        required: [true, 'La edad es requerida']
+        default: 0,
     },
     height: {
         type: String,
