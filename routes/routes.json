@@ -40,5 +40,11 @@
         "middlewares": "",
         "route": "../routes/search",
         "type": "web"
+    },
+    {
+        "path": "/api/trainers",
+        "middlewares": "",
+        "route": "../routes/trainers",
+        "type": "web"
     }
 ]
