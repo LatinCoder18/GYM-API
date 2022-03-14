@@ -75,7 +75,7 @@ const showImage = async (req, res = response) => {
 
     switch (colection) {
         case 'users':
-            modelo = await Usuario.findById(id);
+            modelo = await User.findById(id);
             if (!modelo) {
                 return res.status(400).json({
                     msg: `No existe un usuario con el id ${id}`

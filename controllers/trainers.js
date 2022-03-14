@@ -1,7 +1,6 @@
 const { response } = require('express')
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
-const { generarJWT } = require('../helpers/generateJWT');
 
 module.exports = {
     create: async (req, res = response) => {

@@ -16,14 +16,14 @@ router.put('/:colection/:id', [
     validateJWT,
     isRole('ADMIN_ROLE'),
     check('id', 'El id debe ser de mongodb').isMongoId(),
-    check('colection').custom(c => isAllowedColections(c, ['users', 'clients'])),
+    check('colection').custom(c => isAllowedColections(c, ['users', 'clients', 'trainers'])),
     validarCampos,
     validarArchivoSubir
 ], updateProfilePic);
 
 router.get('/:colection/:id', [
     check('id', 'El id debe ser de mongodb').isMongoId(),
-    check('colection').custom(c => isAllowedColections(c, ['users', 'clients'])),
+    check('colection').custom(c => isAllowedColections(c, ['users', 'clients', 'trainers'])),
     validarCampos
 ], showImage);
 module.exports = router;

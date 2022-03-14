@@ -2,10 +2,12 @@ const { isValidObjectId } = require("mongoose");
 const Client = require('../models/client');
 const Payment = require('../models/payment');
 const Observation = require('../models/observation');
+const Trainer = require('../models/user');
 const allowedCollections = [
     'clients',
     'observations',
-    'payments'
+    'payments',
+    'trainers'
 ]
 
 const search = async (req, res) => {
@@ -28,6 +30,9 @@ const search = async (req, res) => {
         case 'payments':
             await searchPayment(term, res);
             break;
+        case 'trainers':
+            await searchTrainer(term, res);
+            break;    
         default:
             return res.status(500).json({ msg: 'Coleccion Pendiente A Realizar' })
             break;
@@ -49,11 +54,11 @@ const searchTrainer = async (term = '', res = response) => {
     const regex = new RegExp(term, 'i');
 
     if (isValidObjectId(term)) {
-        const categorie = await Categorie.findById(term);
-        return res.json({ results: (categorie) ? categorie : [] })
+        const trainer = await Trainer.findById(term);
+        return res.json({ results: (trainer) ? trainer : [] })
     } else {
-        const categorie = await Categorie.find({ name: term });
-        return res.json({ results: (categorie) ? categorie : [] })
+        const trainer = await Trainer.find({ $or: [{ name: regex }, { email: regex }], $and: [{ status: true },{rol:'TRAINEE_ROLE'}] });
+        return res.json({ results: (trainer) ? trainer : [] })
     }
 }
 const searchPayment = async (term = '', res = response) => {
