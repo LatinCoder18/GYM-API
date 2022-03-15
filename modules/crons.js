@@ -14,7 +14,7 @@ const main = async () => {
     console.log(today + `: ${clients.length} clients updated`);
   }, null, true, 'America/Los_Angeles');
   job.start();
-  await axios.get(`https://maker.ifttt.com/trigger/adonys2/with/key/bF_VjsJqkLr0HDutWtIF46?value1=5358542967&value2=The%20Social%20Network&value3=58415`);
+  //await axios.get(`https://maker.ifttt.com/trigger/adonys2/with/key/bF_VjsJqkLr0HDutWtIF46?value1=5358542967&value2=The%20Social%20Network&value3=58415`);
 }
 
 module.exports = { main };
