@@ -34,7 +34,7 @@ router.post('/login',
 router.post('/register', [check('email', 'You must provide an user id').isEmail(),
 check('password', 'You must provide an user password'),
 check('name', 'You must provide an user name'),
-check('email').custom(existEmail),validateJWT, validateFields], register);
+check('email').custom(existEmail), validateFields], register);
 
 router.get('/check', [validateJWT], (req, res) => {
     res.json({
