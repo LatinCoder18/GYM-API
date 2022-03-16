@@ -39,8 +39,8 @@ module.exports = {
     updateClient: async (req, res) => {
         const { id } = req.params;
         const { _id, observations, __v, ...rest } = req.body;
-        
-        const [client, updated] = Promise.all([Client.findByIdAndUpdate(id, rest),await Client.findById(id)])
+        const client = await Client.findByIdAndUpdate(id, rest);
+        const updated = await Client.findById(id);
         res.json({
             client: updated
         })
