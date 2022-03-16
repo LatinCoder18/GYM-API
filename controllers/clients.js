@@ -22,7 +22,7 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-        
+
         res.json({ client })
     },
     createClient: async (req, res) => {
@@ -38,9 +38,12 @@ module.exports = {
     },
     updateClient: async (req, res) => {
         const { id } = req.params;
-        const { _id, observations, trainer, __v, ...rest } = req.body;
-        const client = await Client.findByIdAndUpdate(id, rest);
-        const updated = await Client.findById(id);
+        const { _id, observations, __v, ...rest } = req.body;
+        try {
+            const [client, updated] = await Promise.all([Client.findByIdAndUpdate(id, rest), await Client.findById(id)])
+        } catch (error) {
+            console.log(error)
+        }
         res.json({
             client: updated
         })
