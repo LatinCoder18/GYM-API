@@ -56,7 +56,7 @@ module.exports = {
     },
     readUsers: async (req, res = response) => {
         const { id } = req.params;
-        const clients = await Client.find({ $and: [{ status: true }, { rol: 'TRAINEE_ROLE' }, { trainer: id }] });
+        const clients = await Client.find({ $and: [{ status: true }, { trainer: id }] });
         res.json({
             clients
         })
