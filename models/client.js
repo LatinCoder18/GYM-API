@@ -41,12 +41,12 @@ const ClientSchema = Schema({
         type: String,
         default: 0
     },
-    services: [{
+    services: {
         type: String,
         required: true,
         default: 'TRAINING',
         emun: ['AEROBICS', 'MASSAGE', 'TRAINING']
-    }],
+    },
     status: {
         type: Boolean,
         default: true,  // true = active, false = inactive

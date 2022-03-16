@@ -1,5 +1,6 @@
 const { response } = require('express')
 const User = require('../models/user');
+const Client = require('../models/client');
 const bcryptjs = require('bcryptjs');
 
 module.exports = {
@@ -51,6 +52,13 @@ module.exports = {
         const users = await User.find({ $and: [{ status: true }, { rol: 'TRAINEE_ROLE' }] });
         res.json({
             users
+        })
+    },
+    readUsers: async (req, res = response) => {
+        const { id } = req.params;
+        const clients = await Client.find({ $and: [{ status: true }, { rol: 'TRAINEE_ROLE' }, { trainer: id }] });
+        res.json({
+            clients
         })
     }
 
