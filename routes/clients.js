@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/', [validateJWT, isRole('ADMIN_ROLE', 'TRAINEE_ROLE')], getClients);
 router.get('/:id', [validateJWT, check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE', 'TRAINEE_ROLE'), validateFields], getClient);
-router.put('/:id', [validateJWT, check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE', 'TRAINEE_ROLE'), validateFields], updateClient);
+router.put('/:id', [validateJWT, check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient),check('trainer', 'El id debe ser un id de mongo valido').isMongoId(),isRole('ADMIN_ROLE', 'TRAINEE_ROLE'), validateFields], updateClient);
 router.delete('/:id', [validateJWT, check('id', 'El id debe ser un id de mongo valido').isMongoId().bail().custom(existClient), isRole('ADMIN_ROLE'), validateFields], removeClient);
 //*firstname, lastname, age, height, weight, email, datetime, phone, imc, icc, services
 router.post('/', [validateJWT, isRole('ADMIN_ROLE'), check('firstname', 'El campo es requrido').notEmpty(), check('services', 'Es obligatorio seleccionar el servicio').notEmpty().custom(c => isAllowedService(c, ['AEROBICS', 'MASSAGE', 'TRAINING'])), validateFields], createClient);
