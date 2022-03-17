@@ -4,7 +4,6 @@ const Server = require('./core/server');
 const webserver  = new Server();
 
 const app = async () => { 
-    // Here you can start modules
     webserver.listen();
 }
 app();
