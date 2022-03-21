@@ -14,11 +14,11 @@ const router = Router();
 //router.post('/',validarArchivoSubir, uploadFiles);
 router.put('/:colection/:id', [
     validateJWT,
-    isRole('ADMIN_ROLE'),
+    isRole('ADMIN_ROLE', 'TRAINEE_ROLE'),
     check('id', 'El id debe ser de mongodb').isMongoId(),
     check('colection').custom(c => isAllowedColections(c, ['users', 'clients', 'trainers'])),
-    validarCampos,
-    validarArchivoSubir
+    validarArchivoSubir,
+    validarCampos
 ], updateProfilePic);
 
 router.get('/:colection/:id', [

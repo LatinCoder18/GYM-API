@@ -26,8 +26,8 @@ const ClientSchema = Schema({
         default: 'Sin correo',
     },
     datetime: {
-        type: Date,
-        default: new Date()
+        type: String,
+        default: moment(new Date()).format("DD/MM/YYYY")
     },
     phone: {
         type: String,
@@ -68,15 +68,19 @@ const ClientSchema = Schema({
         type: String,
         default: 'no-avatar.png',
     },
-    servicedays:{
+    servicedays: {
         type: Number,
         default: 0,
+    },
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 });
 ClientSchema.methods.toJSON = function () {
     const { ...client } = this.toObject();
     client.active = (client.servicedays > 0) ? true : false;
-    client.activeto = moment(new Date()).add(client.servicedays,'days').format("DD/MM/YYYY");
+    client.activeto = moment(new Date()).add(client.servicedays, 'days').format("DD/MM/YYYY");
     return client;
 }
 
