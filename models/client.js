@@ -71,10 +71,6 @@ const ClientSchema = Schema({
     servicedays: {
         type: Number,
         default: 0,
-    },
-    timestamps: {
-        createdAt: 'created_at',
-        updatedAt: 'updated_at'
     }
 });
 ClientSchema.methods.toJSON = function () {
