@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const User = require('../models/user');
 const { dbConnection } = require('../database/config');
 const { load } = require('./routerhandler');
 const { systeminfo } = require('./systeminfo');
@@ -22,6 +23,8 @@ class Server {
         this.routes();
         //  this.listen();
         this.cron();
+        // Crea al usuario administrador si no existe ninguno en la base de datos
+
     }
 
     middlewares() {
@@ -65,5 +68,6 @@ class Server {
         })
         await systeminfo();
     }
+ 
 }
 module.exports = Server;

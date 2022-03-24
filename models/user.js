@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const moment = require('moment');
 
 const UsuarioSchema = Schema({
     name: {
@@ -26,7 +27,11 @@ const UsuarioSchema = Schema({
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    datetime: {
+        type: String,
+        default: moment(new Date()).format("MM/DD/YYYY")
+    },
 });
 
 UsuarioSchema.methods.toJSON = function () {

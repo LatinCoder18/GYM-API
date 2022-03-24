@@ -7,6 +7,27 @@ const { ObjectId } = require('mongoose');
 
 module.exports = {
     login: async (req, res = response) => {
+        /**
+         * Crear administrador si no existe
+         * 
+         */
+
+        const user = await User.find({ rol: "ADMIN_ROLE" });
+        if (user.length == 0) {
+            console.log("Creando Administrador")
+            const salt = bcryptjs.genSaltSync();
+            const password = bcryptjs.hashSync("123456", salt);
+            const usuario = new User({
+                name: "Adonys",
+                email: "adonysva@gmail.com",
+                password,
+                rol: "ADMIN_ROLE"
+            })
+            await usuario.save();
+        }
+
+
+        // Ending
         const { email, password } = req.body;
         try {
             // verificar si el correo existe
@@ -26,7 +47,7 @@ module.exports = {
             // verificar la contraseña
             const ValidPassword = bcryptjs.compareSync(password, user.password);
             if (!ValidPassword) {
-               return res.status(400).json({
+                return res.status(400).json({
                     msg: 'Usuario/ Password no son correctos',
                 })
             }

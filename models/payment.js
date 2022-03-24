@@ -1,10 +1,10 @@
 const { Schema, model } = require('mongoose');
-
+const moment = require('moment');
 
 const PaymentSchema = Schema({
     datetime: {
         type: String,
-        default: new Date().toLocaleDateString()
+        default: moment(new Date()).format("MM/DD/YYYY")
     },
     days: {
         type: Number,
