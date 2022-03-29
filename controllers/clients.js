@@ -22,7 +22,6 @@ module.exports = {
         if (!client) {
             return res.json({ msg: "Cliente no encontrado" });
         }
-
         res.json({ client })
     },
     createClient: async (req, res) => {

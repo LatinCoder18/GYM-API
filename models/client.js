@@ -27,7 +27,7 @@ const ClientSchema = Schema({
     },
     datetime: {
         type: String,
-        default: moment(new Date()).format("MM/DD/YYYY")
+        default: moment(new Date()).format("DD/MM/YYYY")
     },
     phone: {
         type: String,
