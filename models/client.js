@@ -68,6 +68,10 @@ const ClientSchema = Schema({
         type: String,
         default: 'no-avatar.png',
     },
+    daysback: {
+        type: Boolean,
+        default: false
+    },
     servicedays: {
         type: Number,
         default: 0,
