@@ -20,15 +20,23 @@ module.exports = {
     removePayment: async (req, res) => {
         const { id } = req.params;
         const payment = await Payment.findByIdAndUpdate(id, { status: false });
+
         if (!payment) {
             return res.status(400).json({ msg: 'Payment not found' });
         }
+
         const cliente = await Client.findById(payment.client);
         const pay = [];
         for (const paymentx of cliente.payments) {
             if (!(paymentx == payment._id.toString())) {
                 pay.push(paymentx);
             }
+        }
+        /**
+         * @remover_dias Si a la hora de borrar el pago del cliente se hizo en el mismo momento en el que se creó se procede a quitarle los días.
+         */
+        if (payment.datetime == moment(new Date()).format("MM/DD/YYYY")) {
+            cliente.servicedays = cliente.servicedays - (Number(paymeny.months)*30);
         }
         cliente.observations = [...new Set(pay)];
         await cliente.save()
